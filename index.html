@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>百万字长篇小说编辑器</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>百万字长篇小说编辑器</h1>
+        <p>
+          输入一个简单背景情节，自动拆分为超长篇写作计划，并按章节持续生成正文草稿。
+        </p>
+      </header>
+
+      <section class="panel form-panel">
+        <div class="field">
+          <label for="premise">背景情节（核心设定）</label>
+          <textarea
+            id="premise"
+            rows="5"
+            placeholder="例如：一个失去记忆的边境将军，在蒸汽与神术并存的帝国中，被迫从叛徒身份重建荣耀。"
+          ></textarea>
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="genre">题材风格</label>
+            <select id="genre">
+              <option value="玄幻史诗">玄幻史诗</option>
+              <option value="科幻冒险">科幻冒险</option>
+              <option value="都市悬疑">都市悬疑</option>
+              <option value="武侠江湖">武侠江湖</option>
+              <option value="末日生存">末日生存</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="targetWords">目标总字数</label>
+            <input id="targetWords" type="number" min="20000" step="10000" value="1000000" />
+          </div>
+
+          <div class="field">
+            <label for="chapterWords">每章字数（草稿）</label>
+            <input id="chapterWords" type="number" min="800" step="200" value="3000" />
+          </div>
+
+          <div class="field">
+            <label for="batchSize">单次生成章数</label>
+            <input id="batchSize" type="number" min="1" max="20" value="3" />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="planBtn">1. 生成百万字大纲</button>
+          <button id="generateBtn" disabled>2. 按大纲生成章节</button>
+          <button id="exportBtn" disabled>导出 Markdown</button>
+        </div>
+      </section>
+
+      <section class="panel stats-panel" id="statsPanel" hidden>
+        <h2>进度追踪</h2>
+        <div class="stats-grid">
+          <p><strong>计划总章数：</strong><span id="totalChapters">0</span></p>
+          <p><strong>已生成章数：</strong><span id="generatedChapters">0</span></p>
+          <p><strong>估算累计字数：</strong><span id="generatedWords">0</span></p>
+          <p><strong>完成度：</strong><span id="progressText">0%</span></p>
+        </div>
+        <div class="progress-wrap">
+          <div id="progressBar"></div>
+        </div>
+      </section>
+
+      <section class="panel" id="outlinePanel" hidden>
+        <h2>卷级规划（自动拆分）</h2>
+        <div id="outline"></div>
+      </section>
+
+      <section class="panel" id="chaptersPanel" hidden>
+        <h2>章节草稿</h2>
+        <div id="chapters"></div>
+      </section>
+    </main>
+
+    <template id="chapterTemplate">
+      <article class="chapter-card">
+        <h3></h3>
+        <p class="meta"></p>
+        <p class="content"></p>
+      </article>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
